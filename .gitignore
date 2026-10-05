@@ -1,0 +1,27 @@
+# Internal publishing / review notes — never committed
+PUBLISHING.md
+INTERNAL_NOTES.md
+*.review.md
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm
+.yarn-integrity
+
+# Build / dist artifacts
+dist/
+build/
+*.tgz
+.cache
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

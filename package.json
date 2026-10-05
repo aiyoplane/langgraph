@@ -1,0 +1,60 @@
+{
+  "name": "@aiyoplane/langgraph",
+  "version": "1.0.0",
+  "description": "AEAP Composition Boundary Adapter for LangGraph. Thin wrapper that attaches the Runtime Decision Point to LangGraph node invocations.",
+  "keywords": [
+    "aiyo",
+    "aiyoplane",
+    "aeap",
+    "langgraph",
+    "langchain",
+    "authorization",
+    "runtime-decision-point",
+    "rdp",
+    "execution-receipt",
+    "composition-boundary",
+    "graph-node",
+    "agent-authorization",
+    "settlement-verified"
+  ],
+  "author": {
+    "name": "Aiyoplane, Inc.",
+    "email": "rashon@aiyoplane.com",
+    "url": "https://aiyoplane.com"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js"
+    }
+  },
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiyoplane/langgraph.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aiyoplane/langgraph/issues"
+  },
+  "homepage": "https://aiyoplane.com",
+  "scripts": {
+    "test": "node --test",
+    "demo": "node examples/minimal.js"
+  },
+  "dependencies": {
+    "@aiyoplane/mcp-authz": "^1.0.0"
+  },
+  "peerDependencies": {
+    "@langchain/langgraph": ">=0.2.0 <0.3.0"
+  }
+}

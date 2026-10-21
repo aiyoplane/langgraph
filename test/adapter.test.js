@@ -21,7 +21,7 @@ function makeAuthz(rules) {
   return createAiyoMcpAuthz({
     rdp: createLocalRdp({ policy: { rules } }),
     toolConfig: {
-      deploy_node: { aiyoGated: true, action: { type: 'deploy' } },
+      deploy_node: { aiyo_gated: true, action: { type: 'deploy' } },
     },
   });
 }
@@ -32,7 +32,7 @@ const plainNode = async (state) => ({
 });
 
 test('ALLOW runs the inner node with receipt attached', async () => {
-  const authz = makeAuthz([{ action_type: 'deploy', effect: 'allow' }]);
+  const authz = makeAuthz([{ match: { action_type: 'deploy' }, effect: 'allow' }]);
   const gated = wrapNode(plainNode, {
     authz,
     toolName: 'deploy_node',
@@ -43,7 +43,7 @@ test('ALLOW runs the inner node with receipt attached', async () => {
 });
 
 test('aiyoGate decorator-style helper equivalent to wrapNode', async () => {
-  const authz = makeAuthz([{ action_type: 'deploy', effect: 'allow' }]);
+  const authz = makeAuthz([{ match: { action_type: 'deploy' }, effect: 'allow' }]);
   const gate = aiyoGate({
     authz,
     toolName: 'deploy_node',
@@ -55,7 +55,7 @@ test('aiyoGate decorator-style helper equivalent to wrapNode', async () => {
 });
 
 test('BLOCK prevents node execution', async () => {
-  const authz = makeAuthz([{ action_type: 'deploy', effect: 'block' }]);
+  const authz = makeAuthz([{ match: { action_type: 'deploy' }, effect: 'deny' }]);
   const gated = wrapNode(plainNode, {
     authz,
     toolName: 'deploy_node',
@@ -65,7 +65,7 @@ test('BLOCK prevents node execution', async () => {
 });
 
 test('ESCALATE raises EscalationRequired or BlockedByPolicy', async () => {
-  const authz = makeAuthz([{ action_type: 'deploy', effect: 'escalate' }]);
+  const authz = makeAuthz([{ match: { action_type: 'deploy' }, effect: 'escalate' }]);
   const gated = wrapNode(plainNode, {
     authz,
     toolName: 'deploy_node',
@@ -78,7 +78,7 @@ test('ESCALATE raises EscalationRequired or BlockedByPolicy', async () => {
 });
 
 test('Broken intentBuilder blocks the node', async () => {
-  const authz = makeAuthz([{ action_type: 'deploy', effect: 'allow' }]);
+  const authz = makeAuthz([{ match: { action_type: 'deploy' }, effect: 'allow' }]);
   const gated = wrapNode(plainNode, {
     authz,
     toolName: 'deploy_node',
@@ -90,7 +90,7 @@ test('Broken intentBuilder blocks the node', async () => {
 });
 
 test('Non-object Intent blocks the node', async () => {
-  const authz = makeAuthz([{ action_type: 'deploy', effect: 'allow' }]);
+  const authz = makeAuthz([{ match: { action_type: 'deploy' }, effect: 'allow' }]);
   const gated = wrapNode(plainNode, {
     authz,
     toolName: 'deploy_node',
@@ -100,7 +100,7 @@ test('Non-object Intent blocks the node', async () => {
 });
 
 test('Non-function node raises AdapterConfigError', () => {
-  const authz = makeAuthz([{ action_type: 'deploy', effect: 'allow' }]);
+  const authz = makeAuthz([{ match: { action_type: 'deploy' }, effect: 'allow' }]);
   assert.throws(
     () =>
       wrapNode('not a function', {
@@ -113,7 +113,7 @@ test('Non-function node raises AdapterConfigError', () => {
 });
 
 test('Non-function intentBuilder raises AdapterConfigError', () => {
-  const authz = makeAuthz([{ action_type: 'deploy', effect: 'allow' }]);
+  const authz = makeAuthz([{ match: { action_type: 'deploy' }, effect: 'allow' }]);
   assert.throws(
     () =>
       wrapNode(plainNode, {
@@ -126,7 +126,7 @@ test('Non-function intentBuilder raises AdapterConfigError', () => {
 });
 
 test('Receipt attached under custom key', async () => {
-  const authz = makeAuthz([{ action_type: 'deploy', effect: 'allow' }]);
+  const authz = makeAuthz([{ match: { action_type: 'deploy' }, effect: 'allow' }]);
   const checkKey = async (state) => ({ hasCustomKey: 'myReceipt' in state });
   const gated = wrapNode(checkKey, {
     authz,

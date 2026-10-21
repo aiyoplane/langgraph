@@ -25,3 +25,6 @@ build/
 *.swo
 .DS_Store
 Thumbs.db
+
+# Internal process documents — never committed
+docs/_internal/
